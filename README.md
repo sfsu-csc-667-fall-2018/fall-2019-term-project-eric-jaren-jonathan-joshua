@@ -1,7 +1,7 @@
-## CSC667-02
-## Internet Application Design and Development
+### CSC667-02
+### Internet Application Design and Development
 
-## Term Project
+### Term Project
 # UNO
 
 ### Members:
