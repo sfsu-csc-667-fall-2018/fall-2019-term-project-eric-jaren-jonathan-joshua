@@ -22,29 +22,29 @@ Wild Draw 4 Card – When this card is played, the one who played the card can c
 
 ### Objective:
 Our objective for this project is to essentially replicate the idea of UNO and implement it as a web applet that people can connect to. For our web site specifications, we plan to:
-	⋅⋅* Have an instance of UNO
-	⋅⋅* Contain a chat bar on the right-hand side – The chat bar will have two tabs: Global Chat and Lobby Chat
-	⋅⋅* Contain a lobby bar where players can join a public lobby or create a private lobby
-	⋅⋅* Have each lobby contain a maximum of four players. 
-	⋅⋅* Allow players to join any public lobby so long as there is a spot available
-	⋅⋅* Allow players to join mid-game but not be permit them to play until the current game is over
-	⋅⋅* Create a database of players accounts that allow players to customize their profile picture and username
-	⋅⋅* Block features, like profile customization, for clients who do not have accounts
+	* Have an instance of UNO
+	* Contain a chat bar on the right-hand side – The chat bar will have two tabs: Global Chat and Lobby Chat
+	* Contain a lobby bar where players can join a public lobby or create a private lobby
+	* Have each lobby contain a maximum of four players. 
+	* Allow players to join any public lobby so long as there is a spot available
+	* Allow players to join mid-game but not be permit them to play until the current game is over
+	* Create a database of players accounts that allow players to customize their profile picture and username
+	* Block features, like profile customization, for clients who do not have accounts
 
 For our game specifications, we play to:
-	⋅⋅* Create an UNO game using JavaScript
-	⋅⋅* Implement all current features of UNO (such as rules and cards)
-	⋅⋅* Force players to follow a clockwise order, unless a Reverse card is played
-	⋅⋅* Have stackable Draw 4 and Draw 2 cards
-	⋅⋅* Allow a maximum of 4-players in each lobby
-	⋅⋅* Allow players to match the top stack card by card value and color
-	⋅⋅* Allow players to spectate if they join a lobby whose game is in progress
+	* Create an UNO game using JavaScript
+	* Implement all current features of UNO (such as rules and cards)
+	* Force players to follow a clockwise order, unless a Reverse card is played
+	* Have stackable Draw 4 and Draw 2 cards
+	* Allow a maximum of 4-players in each lobby
+	* Allow players to match the top stack card by card value and color
+	* Allow players to spectate if they join a lobby whose game is in progress
 
 To complete the project, we will be using:
-	⋅⋅* JavaScript, CSS, and HTML for website and web-app development
-	⋅⋅* Node.js and Express.js for additional web functionality
-	⋅⋅* PostgreSQL to store and hold account information, lobby information, and chat information
-	⋅⋅* Heroku to manage all of our project elements
- 	⋅⋅* GitHub to manage version control
-	⋅⋅* Discord for communication
+	* JavaScript, CSS, and HTML for website and web-app development
+	* Node.js and Express.js for additional web functionality
+	* PostgreSQL to store and hold account information, lobby information, and chat information
+	* Heroku to manage all of our project elements
+ 	* GitHub to manage version control
+	* Discord for communication
 
