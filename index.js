@@ -1,20 +1,15 @@
-var PORT = 8096;
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const router = require('./routes/main.js');
 
+var port = 8096;
 var http = require('http');
-var server = http.Server(app);
+var server = http. createServer(app);
 
 app.use(express.static('client'));
+app.use('/', router);
 
-server.listen(PORT, function() {
+server.listen(port, function() {
     console.log('Server is running...');
 });
 
-var io = require('socket.io')(server);
-
-io.on('connection', function(socket) {
-    socket.on('message', function(msg) {
-        io.emit('message', msg);
-    });
-});
