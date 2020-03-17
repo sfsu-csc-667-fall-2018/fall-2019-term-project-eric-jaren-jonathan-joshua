@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const router = require('./routes/main.js');
 
-var port = 8096;
+var port = 8096 || process.env.PORT;
 var http = require('http');
 var server = http. createServer(app);
 
