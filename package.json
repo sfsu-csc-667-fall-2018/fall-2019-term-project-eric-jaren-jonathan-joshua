@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "NODE_ENV=development DEBUG=APP_NAME:* nodemon ./bin/www"
+    "start:dev": "NODE_ENV=development DEBUG=APP_NAME:* nodemon ./bin/www",
+    "db:create:migration": "npx sequelize migration:generate --name ",
+    "db:migrate": "npx sequelize db:migrate",
+    "db:rollback": "npx sequelize db:migrate:undo"
   },
   "repository": {
     "type": "git",
@@ -26,9 +29,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
-  },
-
-  "db:create:migration": "npx sequelize migration:generate --name ",
-  "db:migrate": "npx sequelize db:migrate",
-  "db:rollback": "npx sequelize db:migrate:undo"
+  }
 }
