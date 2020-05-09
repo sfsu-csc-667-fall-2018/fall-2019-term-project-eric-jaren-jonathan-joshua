@@ -16,9 +16,11 @@
        <div class="cr-login-popup-content">
             <h2>Login</h2>
             <img class="cr-close" id="close-popup-login" src="resources/images/cancel-24px.svg" alt="Quit">
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
-            <button class="cr-button">Login</button>
+            <form id="cr-login-form">
+                <input type="text" placeholder="Username">
+                <input type="password" placeholder="Password">
+                <button class="cr-button">Login</button>
+            </form>
        </div>
     </div>
 
@@ -26,10 +28,12 @@
         <div class="cr-signup-popup-content">
              <h2>Sign Up</h2>
              <img class="cr-close" id="close-popup-signup" src="resources/images/cancel-24px.svg" alt="Quit">
-             <input type="text" placeholder="Username">
-             <input type="password" placeholder="Password">
-             <input type="password" placeholder="Confirm Password">
-             <button class="cr-button">Sign Up</button>
+             <form id="cr-signup-form">
+                <input type="text" placeholder="Username">
+                <input type="password" placeholder="Password">
+                <input type="password" placeholder="Confirm Password">
+                <button class="cr-button">Sign Up</button>
+             </form>
         </div>
     </div>
 
@@ -50,11 +54,11 @@
             </div>
             <div class="cr-chat column">
                 <h2 class="cr-chat-title">Chat</h2>
-                <div class="cr-chat-box"> </div>
-                <div class="chat-input">
-                    <input type="text" placeholder="Type Here...">
+                <div id="cr-chat-container" class="cr-chat-box"></div>
+                <form id="cr-chat" class="chat-input">
+                    <input id="message" autocomplete="off" type="text" placeholder="Type Here...">
                     <button class="cr-button">Send</button>
-                </div>
+                </form>
             </div>
         </div>
     </body>

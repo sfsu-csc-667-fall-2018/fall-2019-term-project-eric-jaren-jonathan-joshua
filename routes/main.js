@@ -1,31 +1,45 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const db = require('../db');
 const path = require('path');
 
-router.get("/", (request, response) => {
-    response.sendFile(path.join(__dirname + '/index.html'));
+
+const users  = [];
+
+router.get("/", (req, res) => {    
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-router.get("/tests", (request, response) => {
+
+
+router.get("/login", (req, res) => {
+    console.log(req);
+    db.connect()
+    .then(() => {
+        console.log(`Database has been connected.`);
+        db.any(`SELECT id, username, password FROM account_db`)
+        .then(results => {
+            console.log(results);
+        })
+    
+        .catch(error => {
+            console.log(error);
+        })
+    })
+
+    .catch(error => {
+        console.log(error);
+    })
+});
+
+router.get("/tests", (req, res) => {
     db.any(`INSERT INTO test_table ("testString") VALUES ('Hello at ${Date.now()}')`)
         .then(_ => db.any(`SELECT * FROM test_table`))
-        .then(results => response.json(results))
+        .then(results => res.json(results))
         .catch(error => {
             console.log(error)
-            response.json({ error })
+            res.json({ error })
         })
-})
-
-router.post('/signup', (request, response) => {
-    
 });
-
-function validUser(user) {
-    const validEmail = typeof user.email == 'string' && user.email.trim() != '';
-    const validPassword = typeof user.email == 'string' && user.email.trim() != '' && user.password.trim().length >= 6;
-
-    return validEmail && validPassword;
-}
 
 module.exports = router;

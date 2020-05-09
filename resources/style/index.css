@@ -225,6 +225,21 @@
     height: 620px;
     border-right: 20px var(--cr-green5) solid;
     border-left: 20px var(--cr-green5) solid;
+    overflow-y: auto;
+}
+
+.cr-chat-box .cr-chat-message {
+    background-color: var(--cr-white);
+    font-size: 12px;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px var(--cr-black) solid;
+}
+
+.cr-chat-message .chat-meta {
+    font-size: 10px;
+    margin: 0px;
+    font-weight: bold;
 }
 
 
