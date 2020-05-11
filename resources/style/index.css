@@ -57,15 +57,17 @@
     font-size: 40px;
     font-weight: bold;
 }
-
+    
 .cr-login {
     font-size: 20px !important;
+    display:inherit;
 }
 
 .cr-button {
+    height: 40px;
+    margin-top: 5px;
     font-size: 20px;
     font-weight: bold;
-    margin-top: 9px;
     color: var(--cr-white);
     padding: auto;
     border-radius: 5px;
@@ -151,6 +153,7 @@
     width: 75%;
     padding: 10px;
     border-radius: 10px;
+    border: none;
 }
 
 .cr-signup-popup-content input {
@@ -159,6 +162,7 @@
     width: 75%;
     padding: 10px;
     border-radius: 10px;
+    border: none;
 }
 
 .cr-signup-popup h2{
@@ -232,14 +236,20 @@
     background-color: var(--cr-white);
     font-size: 12px;
     text-align: left;
-    padding: 10px;
-    border-bottom: 1px var(--cr-black) solid;
+    padding: 0px 10px;
 }
 
 .cr-chat-message .chat-meta {
     font-size: 10px;
     margin: 0px;
     font-weight: bold;
+}
+
+.console-text {
+    margin: 0px;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--cr-green5);
 }
 
 
