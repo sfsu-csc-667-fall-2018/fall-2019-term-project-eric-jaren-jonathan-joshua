@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>UNO | CSC667 Term Project</title>
+    <link rel="stylesheet" type="text/css" href="resources/style/index.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<div class="main-container">
+    <header class="cr-header d-flex justify-content-between">
+        <h1 class="cr-main-title">Card Royale.</h1>
+        <div class="cr-login"> 
+            <button class="cr-button" id="account-details-button" href="/"><%= name %></button>
+            <form action="/logout?_method=DELETE" method="POST"><button type="submit" action="/logout?_method=DELETE" method="POST" class="cr-button" id="logout-button">Logout</button></form>
+        </div>
+    </header>
+    <body>
+        <div class="cr-body-container row">
+            <div class="cr-lobby-list column">
+                
+            </div>
+            <div class="cr-game-content column">
+                
+            </div>
+            <div class="cr-chat column">
+                <h2 class="cr-chat-title">Chat</h2>
+                <div id="cr-chat-container" class="cr-chat-box"></div>
+                <form id="cr-chat" class="chat-input">
+                    <input id="message" autocomplete="off" type="text" placeholder="Type Here...">
+                    <button class="cr-button">Send</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</div>
+
+<script src="resources/scripts/lobby.js"></script>
+
+</html>

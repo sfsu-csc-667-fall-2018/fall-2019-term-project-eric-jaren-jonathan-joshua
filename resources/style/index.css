@@ -57,15 +57,17 @@
     font-size: 40px;
     font-weight: bold;
 }
-
+    
 .cr-login {
     font-size: 20px !important;
+    display:inherit;
 }
 
 .cr-button {
+    height: 40px;
+    margin-top: 5px;
     font-size: 20px;
     font-weight: bold;
-    margin-top: 9px;
     color: var(--cr-white);
     padding: auto;
     border-radius: 5px;
