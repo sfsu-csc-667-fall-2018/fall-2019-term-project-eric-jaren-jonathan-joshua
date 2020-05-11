@@ -17,7 +17,7 @@ const db = require('./db');
 const initializePassport = require('./passport-config')
 const formatMessage = require('./models/messages');
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8096;
 const server = http.createServer(app);
 const io = socket(server);
 
