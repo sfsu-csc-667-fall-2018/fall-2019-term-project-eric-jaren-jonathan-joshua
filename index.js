@@ -24,7 +24,7 @@ const io = socket(server);
 const sessionStore = new session.MemoryStore();
 const sessionMiddleware = session({
   store: sessionStore,
-  secret: process.env.SESSION_SECRET,
+  secret: 'kobe-maguire',
   resave: false,
   saveUninitialized: false,
   cookie: {
