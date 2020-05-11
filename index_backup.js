@@ -39,16 +39,11 @@ app.use(passport.session());
 
 io.on('connection', socket => {
     console.log('A user has connected');
-    socket.broadcast.emit('message', formatMessage('BOT Riley', 'Welcome to CardRoyale!'));
-
-    socket.on('disconnect', () => {
-        io.emit('message', formatMessage('BOT Riley', 'Welcome to CardRoyale!'));
-    })
+    io.emit('message', formatMessage('BOT Riley', 'Welcome to CardRoyale!'));
 
     // Listen incoming chats//
     socket.on('chatMessage', (message) => {
         io.emit('message', message);
-        console.log(message);
     })
 });
 
