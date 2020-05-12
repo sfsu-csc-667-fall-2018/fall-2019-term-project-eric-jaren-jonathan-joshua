@@ -10,6 +10,7 @@ module.exports = {
         },
         lobby_id: {
           type: Sequelize.INTEGER,
+          allowNull: false
         }
       }
     );
