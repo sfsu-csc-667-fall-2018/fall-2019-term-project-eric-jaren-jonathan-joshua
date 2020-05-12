@@ -15,9 +15,8 @@ const http = require('http');
 const db = require('./db');
 
 const initializePassport = require('./passport-config')
-const formatMessage = require('./models/messages');
 
-const port = process.env.PORT || 8096;
+const port = process.env.PORT;
 const server = http.createServer(app);
 const io = socket(server);
 
@@ -58,32 +57,35 @@ io.use((socket, next) => {
   sessionMiddleware(socket.request, socket.request.res || {}, next);
 })
 
-io.on('connection', socket => {
+io.on('connection', (socket) => {
   if (socket.request.session.passport) {
-    socket.broadcast.emit('consoleMessage', 'A user has joined the chat.');
-
     let user = {
       passport: socket.request.session.passport,
       id: socket.id
     }
     socket.emit('userInfo', (user));
   }
-
-  socket.on('disconnect', () => {
-    if (socket.request.session.passport) {
-      socket.broadcast.emit('consoleMessage', 'A user has disconnected.');
-    }
+ 
+  socket.on('joinRoom', (user) => {
+    const lobby = user.lobby;
+    socket.join(user.lobby, function() {});
+    socket.broadcast.to(user.lobby).emit('consoleMessage', user.username + ' has joined the chat.');
+    socket.user = user;
   })
 
+  socket.on('disconnect', () => {
+    if (socket.user) socket.broadcast.to(socket.user.lobby).emit('consoleMessage', socket.user.username + ' has left the chat.');  
+  })
   // Listen incoming chats//
   socket.on('chatMessage', (message) => {
-    io.emit('message', message);
+    io.to(message.lobby).emit('message', message);
   })
 
   socket.on('retrieveInfo', (id) => {
     db.any(`SELECT id, username, password FROM account_db`)
       .then(results => {
         user = results.find(user => user.id === id);
+        delete user.password;
         socket.emit('foundInfo', user);
       })
   })

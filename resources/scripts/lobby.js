@@ -8,6 +8,7 @@ let user;
 
 socket.on('connect', () => {
     id = socket.id;
+    console.log(socket);
 })
 
 socket.on('userInfo', user => {
@@ -17,22 +18,28 @@ socket.on('userInfo', user => {
 socket.on('foundInfo', userInfo => {
     user = userInfo;
     user.lobby = new URLSearchParams(window.location.search).get('Lobby');
+    
+    socket.emit('joinRoom', user);
 })
-
-socket.emit('joinRoom', { })
 
 // CR-Chat Listener //
 chat.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    
-    const message = {
-        username: user.username,
-        text: e.target.elements.message.value,
-        time: new Date().toLocaleString()
-    };
+    if (e.target.elements.message.value) {
+        const message = {
+            username: user.username,
+            text: e.target.elements.message.value,
+            time: new Date().toLocaleString(),
+            lobby: user.lobby
+        };
 
-    socket.emit('chatMessage', message);
+        const form = document.getElementById('cr-chat');
+        form.reset();
+    
+        socket.emit('chatMessage', message);
+    }
+    
 })
 
 socket.on('message', message => {
@@ -43,9 +50,6 @@ socket.on('message', message => {
                         '<p class="chat-meta" style="text-align: right">' + message.time + '</p>';
     
     document.querySelector('.cr-chat-box').appendChild(domNode);
-
-    const form = document.getElementById('cr-chat');
-    form.reset();
     chatBox.scrollTop = chatBox.scrollHeight;
 })
 
