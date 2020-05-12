@@ -17,7 +17,7 @@ const db = require('./db');
 const initializePassport = require('./passport-config')
 const formatMessage = require('./models/messages');
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8096;
 const server = http.createServer(app);
 const io = socket(server);
 
@@ -77,15 +77,15 @@ io.on('connection', socket => {
 
   // Listen incoming chats//
   socket.on('chatMessage', (message) => {
-      io.emit('message', message);
+    io.emit('message', message);
   })
 
   socket.on('retrieveInfo', (id) => {
     db.any(`SELECT id, username, password FROM account_db`)
-    .then(results => {
+      .then(results => {
         user = results.find(user => user.id === id);
         socket.emit('foundInfo', user);
-    })
+      })
   })
 });
 
@@ -96,70 +96,88 @@ io.on('connection', socket => {
   code section here. 
 
 */
-app.get('/lobby', checkAuthenticated, (req, res) => {
-  res.render('lobby.ejs', { name: req.user.username })
-})
 
 app.get('/', checkAuthenticated, (req, res) => {
-  res.redirect('/lobby');
-})
-
-app.get('/login', checkNotAuthenticated, (req, res) => {
-  res.render('index.ejs');
-})
-
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/lobby',
-  failureRedirect: '/login',
-  failureFlash: true
-}))
-
-app.get('/signup', checkNotAuthenticated, (req, res) => {
-  res.render('register.ejs');
-})
-
-app.post('/signup', checkNotAuthenticated, async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 10)
-
-  const newUser = {
-    id: Math.floor((Math.random() * 9999) + 1),
-    username: req.body.username,
-    password: hashedPassword
-  }
-  db.any(`INSERT INTO account_db (id, username, password) VALUES (${newUser.id}, '${newUser.username}', '${newUser.password}')`)
-    .then(data => {
-      console.log(newUser);
+  db.any(`SELECT player_id, lobby_id FROM lobby_assignments`)
+    .then(results => {
+      let user = results.find(user => user.player_id === req.user.id);
+      if (user) {
+        if (req.query.Lobby) {
+          if (req.query.Lobby == user.lobby_id) res.render('lobby.ejs', { name: req.user.username });
+           else {
+            db.any(`UPDATE lobby_assignments SET (player_id, lobby_id) = (${req.user.id}, ${req.query.Lobby}) 
+              WHERE (player_id, lobby_id) = (${req.user.id}, ${user.lobby_id})`)
+            .then(() => {
+              res.redirect('/?Lobby=' + req.query.Lobby);
+            })
+           }
+        } else res.redirect('/?Lobby=' + user.lobby_id);
+      } else {
+        db.any(`INSERT INTO lobby_assignments (player_id, lobby_id) VALUES (${req.user.id}, '1')`)
+        res.redirect('/?Lobby=1');
+      }
     })
-    .catch(error => {
+    .catch (error => {
       console.log(error);
     })
+  })
 
-  res.redirect('/');
-})
+  app.get('/login', checkNotAuthenticated, (req, res) => {
+    res.render('index.ejs');
+  })
 
-app.delete('/logout', (req, res) => {
-  req.logOut();
-  res.redirect('/login');
-})
+  app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  }))
+
+  app.get('/signup', checkNotAuthenticated, (req, res) => {
+    res.render('register.ejs');
+  })
+
+  app.post('/signup', checkNotAuthenticated, async (req, res) => {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+
+    const newUser = {
+      id: Math.floor((Math.random() * 9999) + 1),
+      username: req.body.username,
+      password: hashedPassword
+    }
+    db.any(`INSERT INTO account_db (id, username, password) VALUES (${newUser.id}, '${newUser.username}', '${newUser.password}')`)
+      .then(data => {
+        console.log(newUser);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+
+    res.redirect('/');
+  })
+
+  app.delete('/logout', (req, res) => {
+    req.logOut();
+    res.redirect('/login');
+  })
 
 
-/* 
-  AUTHENTICATION
+  /* 
+    AUTHENTICATION
+  
+    These functions handle the authentication redirection for login.
+    If a user is not logged in, it will redirect to the /login page.
+  */
+  function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
 
-  These functions handle the authentication redirection for login.
-  If a user is not logged in, it will redirect to the /login page.
-*/
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
+    res.redirect('/login');
   }
 
-  res.redirect('/login');
-}
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
+  function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect('/');
+    }
+    next();
   }
-  next();
-}

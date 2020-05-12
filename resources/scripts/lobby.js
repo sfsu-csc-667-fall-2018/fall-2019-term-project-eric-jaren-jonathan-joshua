@@ -2,16 +2,13 @@ const socket = io();
 const chat = document.getElementById('cr-chat');
 const chatBox = document.getElementById('cr-chat-container');
 const accountDetailsButton = document.getElementById('account-details-button');
+
 let id;
 let user;
 
 socket.on('connect', () => {
     id = socket.id;
 })
-// startup //
-window.onload = function() {
-    
-}
 
 socket.on('userInfo', user => {
     if (id == user.id) socket.emit('retrieveInfo', user.passport.user);
@@ -19,9 +16,10 @@ socket.on('userInfo', user => {
 
 socket.on('foundInfo', userInfo => {
     user = userInfo;
-
-    console.log(user);
+    user.lobby = new URLSearchParams(window.location.search).get('Lobby');
 })
+
+socket.emit('joinRoom', { })
 
 // CR-Chat Listener //
 chat.addEventListener('submit', (e) => {
