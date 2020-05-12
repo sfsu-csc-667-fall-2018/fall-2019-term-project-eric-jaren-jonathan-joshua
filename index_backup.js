@@ -14,7 +14,7 @@ const formatMessage = require('./models/messages');
 require('./config/passport')(passport);
 
 const app = express();
-const port = process.env.PORT || 8096;
+const port = process.env.PORT;
 const server = http.createServer(app);
 const io = socket(server);
 
@@ -29,7 +29,7 @@ app.use(express.static(__dirname));
 
 app.use(flash());
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'secret',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));

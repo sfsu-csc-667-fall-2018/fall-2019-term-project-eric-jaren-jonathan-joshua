@@ -14,12 +14,13 @@ window.onload = function() {
 }
 
 socket.on('userInfo', user => {
-    console.log(user);
     if (id == user.id) socket.emit('retrieveInfo', user.passport.user);
 })
 
 socket.on('foundInfo', userInfo => {
     user = userInfo;
+
+    console.log(user);
 })
 
 // CR-Chat Listener //

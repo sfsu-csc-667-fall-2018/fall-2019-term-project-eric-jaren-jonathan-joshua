@@ -17,14 +17,14 @@ const db = require('./db');
 const initializePassport = require('./passport-config')
 const formatMessage = require('./models/messages');
 
-const port = process.env.PORT || 8096;
+const port = process.env.PORT;
 const server = http.createServer(app);
 const io = socket(server);
 
 const sessionStore = new session.MemoryStore();
 const sessionMiddleware = session({
   store: sessionStore,
-  secret: process.env.SESSION_SECRET || 'secret',
+  secret: 'kobe-maguire',
   resave: false,
   saveUninitialized: false,
   cookie: {
