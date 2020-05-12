@@ -9,7 +9,7 @@ module.exports = {
           primaryKey: true,
         },
         lobby_id: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
         }
       }
     );
