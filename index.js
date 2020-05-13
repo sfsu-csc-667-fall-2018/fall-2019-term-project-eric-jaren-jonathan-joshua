@@ -13,3 +13,7 @@ server.listen(port, function() {
     console.log('Server is running...');
 });
 
+const pgp = require('pg-promise')();
+const connection = pgp(process.env.DATABASE_URL);
+module.exports = connection;
+
