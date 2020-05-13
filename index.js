@@ -1,19 +1,192 @@
-const express = require('express');
-const app = express();
-const router = require('./routes/main.js');
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
-var port = 8096 || process.env.PORT;
-var http = require('http');
-var server = http. createServer(app);
+const express = require('express')
+const app = express()
+const bcrypt = require('bcrypt')
+const passport = require('passport')
+const flash = require('express-flash')
+const session = require('express-session')
+const methodOverride = require('method-override')
+const socket = require('socket.io');
+const http = require('http');
 
-app.use(express.static('client'));
-app.use('/', router);
+const db = require('./db');
 
-server.listen(port, function() {
-    console.log('Server is running...');
+const initializePassport = require('./passport-config')
+
+const port = process.env.PORT;
+const server = http.createServer(app);
+const io = socket(server);
+
+const sessionStore = new session.MemoryStore();
+const sessionMiddleware = session({
+  store: sessionStore,
+  secret: 'kobe-maguire',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 60000
+  }
+})
+
+server.listen(port, () => {
+  console.log('Server is running...');
 });
 
+initializePassport(passport);
+
+app.set('view-engine', 'ejs');
+app.use(express.urlencoded({ extended: false }));
+app.use(flash());
+app.use(sessionMiddleware);
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(methodOverride('_method'));
+app.use(express.static(__dirname));
+
+/*
+  IO HANDLER
+
+  This sections handles the socket connection.
+*/
+
+io.use((socket, next) => {
+  sessionMiddleware(socket.request, socket.request.res || {}, next);
+})
+
+io.on('connection', (socket) => {
+  if (socket.request.session.passport) {
+    let user = {
+      passport: socket.request.session.passport,
+      id: socket.id
+    }
+    socket.emit('userInfo', (user));
+  }
+ 
+  socket.on('joinRoom', (user) => {
+    const lobby = user.lobby;
+    socket.join(user.lobby, function() {});
+    socket.broadcast.to(user.lobby).emit('consoleMessage', user.username + ' has joined the chat.');
+    socket.user = user;
+  })
+
+  socket.on('disconnect', () => {
+    if (socket.user) socket.broadcast.to(socket.user.lobby).emit('consoleMessage', socket.user.username + ' has left the chat.');  
+  })
+  // Listen incoming chats//
+  socket.on('chatMessage', (message) => {
+    io.to(message.lobby).emit('message', message);
+  })
+
+  socket.on('retrieveInfo', (id) => {
+    db.any(`SELECT id, username, password FROM account_db`)
+      .then(results => {
+        user = results.find(user => user.id === id);
+        delete user.password;
+        socket.emit('foundInfo', user);
+      })
+  })
+});
+
+<<<<<<< HEAD
 const pgp = require('pg-promise')();
 const connection = pgp(process.env.DATABASE_URL);
 module.exports = connection;
 
+=======
+/*
+  ROUTES
+
+  This sections deals with the routes of the project. All requests are handled through this 
+  code section here. 
+
+*/
+
+app.get('/', checkAuthenticated, (req, res) => {
+  db.any(`SELECT player_id, lobby_id FROM lobby_assignments`)
+    .then(results => {
+      let user = results.find(user => user.player_id === req.user.id);
+      if (user) {
+        if (req.query.Lobby) {
+          if (req.query.Lobby == user.lobby_id) res.render('lobby.ejs', { name: req.user.username });
+           else {
+            db.any(`UPDATE lobby_assignments SET (player_id, lobby_id) = (${req.user.id}, ${req.query.Lobby}) 
+              WHERE (player_id, lobby_id) = (${req.user.id}, ${user.lobby_id})`)
+            .then(() => {
+              res.redirect('/?Lobby=' + req.query.Lobby);
+            })
+           }
+        } else res.redirect('/?Lobby=' + user.lobby_id);
+      } else {
+        db.any(`INSERT INTO lobby_assignments (player_id, lobby_id) VALUES (${req.user.id}, '1')`)
+        res.redirect('/?Lobby=1');
+      }
+    })
+    .catch (error => {
+      console.log(error);
+    })
+  })
+
+  app.get('/login', checkNotAuthenticated, (req, res) => {
+    res.render('index.ejs');
+  })
+
+  app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  }))
+
+  app.get('/signup', checkNotAuthenticated, (req, res) => {
+    res.render('register.ejs');
+  })
+
+  app.post('/signup', checkNotAuthenticated, async (req, res) => {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+
+    const newUser = {
+      id: Math.floor((Math.random() * 9999) + 1),
+      username: req.body.username,
+      password: hashedPassword
+    }
+    db.any(`INSERT INTO account_db (id, username, password) VALUES (${newUser.id}, '${newUser.username}', '${newUser.password}')`)
+      .then(data => {
+        console.log(newUser);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+
+    res.redirect('/');
+  })
+
+  app.delete('/logout', (req, res) => {
+    req.logOut();
+    res.redirect('/login');
+  })
+
+
+  /* 
+    AUTHENTICATION
+  
+    These functions handle the authentication redirection for login.
+    If a user is not logged in, it will redirect to the /login page.
+  */
+  function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+
+    res.redirect('/login');
+  }
+
+  function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect('/');
+    }
+    next();
+  }
+>>>>>>> 8e9d81269afc1db386a0b8a10503a4217d92a5fe
