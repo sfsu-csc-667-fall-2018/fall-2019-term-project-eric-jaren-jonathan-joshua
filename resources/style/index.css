@@ -281,6 +281,63 @@
     color: var(--cr-green5);
 }
 
+/**
+BboyBigJon0419:
+This is where the classes to customize the game and cards will be implemented
+**/
+
+.cards-in-hand{
+    background-color: gray;
+    overflow-y: scroll;
+    width: 800px;
+    height: 180px;
+    margin-bottom: auto;
+    position: fixed;
+    bottom: 0px;
+}
+
+#card0, #card1, #card2, #card3, #card4, #card5, #card6, #card7,
+#card8, #card9, #card10, #card11, #card11, #card12, #card13{
+    float: left;
+    background-color: white;
+    margin: 20px, 10px, 10px, 20px;
+    width: 80px;
+    height: 150px;
+    border-radius: 10px;
+    line-height: 50px;
+    margin: 20px;
+}
+
+#deck{
+    background-color: white;
+    float: right;
+    height: 150px;
+    width: 80px;
+    margin-right: 280px;
+    line-height: 140px; 
+    border-radius: 10px;
+    margin-top: 200px;
+    font-size: 20px;
+    box-shadow: 10px 10px #808080;
+    text-align: center;
+    font-weight: bold;
+}
+
+#tableCard{
+    background-color: white;
+    float: right;
+    height: 150px;
+    width: 80px;
+    margin-right: 60px;
+    line-height: 140px;
+    border-radius: 10px;
+    margin-top: 200px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
 
 
 

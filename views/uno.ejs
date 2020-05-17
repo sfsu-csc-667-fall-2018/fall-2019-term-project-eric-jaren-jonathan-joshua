@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <title>UNO | CSC667 Term Project</title>
+        <link rel="stylesheet" type="text/css" href="resources/style/index.css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <div class="main-container">
+        <div class="cr-login-popup">
+            <div class="cr-login-popup-content">
+                 <h2>Login</h2>
+                 <img class="cr-close" id="close-popup-login" src="resources/images/cancel-24px.svg" alt="Quit">
+                 <form method="POST" action="/login" id="cr-login-form">
+                     <input type="text" name="username" placeholder="Username">
+                     <input type="password" name="password" placeholder="Password">
+                     <button class="cr-button">Login</button>
+                 </form>
+            </div>
+    </div>
+
+        <div class="cr-signup-popup">
+            <div class="cr-signup-popup-content">
+                 <h2>Sign Up</h2>
+                 <img class="cr-close" id="close-popup-signup" src="resources/images/cancel-24px.svg" alt="Quit">
+                 <form method="POST" action="/signup" id="cr-signup-form">
+                    <input autocomplete="off" type="text" name="username" placeholder="Username" required>
+                    <input autocomplete="off" type="password" name="password" placeholder="Password" required>
+                    <input autocomplete="off" type="password" placeholder="Confirm Password" required>
+                    <button class="cr-button">Sign Up</button>
+                 </form>
+            </div>
+        </div>
+
+        <header class="cr-header d-flex justify-content-between">
+            <h1 class="cr-main-title">Card Royale.</h1>
+            <div class="cr-login"> 
+                <button class="cr-button" id="login-button" href="/">Login</button>
+                <button class="cr-button" id="signup-button" href="/">Sign up</button>
+            <button class="cr-button" id="account-details-button" href="/"></button>
+            </div>
+        </header>
+    <body>
+        <div class="cr-body-container row"> <!-- This row is for Lobby-->
+            <div class="cr-lobby-list column">
+                <button class="cr-button cr-add-lobby">🎮 Lobby-1</button>
+                <button class="cr-button cr-add-lobby">🎮 Lobby-2</button>
+                <button class="cr-button cr-add-lobby">🎮 Lobby-3</button>
+                <button class="cr-button cr-add-lobby"><img src="resources/images/add-36px.svg" alt="Add"></button>
+            </div>
+
+            <div class="cr-game-content column "> <!-- This is where the game content will be implemented-->
+                
+            </div>
+            <div class="cr-chat column">
+                <h2 class="cr-chat-title">Chat</h2>
+                <div id="cr-chat-container" class="cr-chat-box"></div>
+                <form id="cr-chat" class="chat-input">
+                    <input id="message" autocomplete="off" type="text" placeholder="Type Here...">
+                    <button class="cr-button">Send</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script scr="resources/scripts/index.js"></script>
+<script src="resources/scripts/uno.js"></script>
+</html>
