@@ -75,6 +75,17 @@
     transition: 0.3s;
 }
 
+input:focus {
+    outline: 5px outset var(--cr-green3);
+}
+
+.cr-start-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
 .cr-button:hover {
     background: var(--cr-accent-secondary);
 }
@@ -87,48 +98,23 @@
     outline: 0;
 }
 
-.cr-login-popup {
+.cr-popup {
     position: absolute;
     background: rgba(0,0,0,0.6);
     width: 100vw;
     height: 100vh;
     top: 0;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     z-index: 100;
 }
 
-.cr-signup-popup {
-    position: absolute;
-    background: rgba(0,0,0,0.6);
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    z-index: 100;
-}
-
-.cr-login-popup-content {
+.cr-popup-content {
     padding: 40px;
     width: 600px;
     height: 320px;
-    position: relative;
-    background: var(--cr-main);
-    text-align: center;  
-    border-radius: 20px;
-    box-shadow: 6px 6px 24px -6px var(--cr-black);
-    z-index: 100;
-}
-
-.cr-signup-popup-content {
-    padding: 40px;
-    width: 600px;
-    height: 400;
     position: relative;
     background: var(--cr-main);
     text-align: center;  
@@ -146,18 +132,7 @@
     border-radius: 50%;
 }
 
-.cr-login-popup-content input {
-    font-family: 'Gotham Light';
-    margin: 20px auto !important;
-    font-weight: normal;
-    display: block;
-    width: 75%;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-}
-
-.cr-signup-popup-content input {
+.cr-popup input {
     font-family: 'Gotham Light';
     margin: 20px auto !important;
     display: block;
@@ -167,13 +142,7 @@
     border: none;
 }
 
-.cr-signup-popup h2{
-    color: var(--cr-white);
-    font-size: 36px;
-    font-weight: bold;
-}
-
-.cr-login-popup h2{
+.cr-popup h2{
     color: var(--cr-white);
     font-size: 36px;
     font-weight: bold;
@@ -375,7 +344,7 @@
 }
 
 .cr-chat input:focus {
-    outline: 0;
+    outline: 5px outset var(--cr-green3);
 }
 
 .cr-chat-box {

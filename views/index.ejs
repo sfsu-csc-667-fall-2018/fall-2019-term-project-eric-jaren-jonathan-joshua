@@ -12,8 +12,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <div class="main-container">
-    <div class="cr-login-popup">
-       <div class="cr-login-popup-content">
+    <div id="login-popup" class="cr-popup cr-hidden">
+       <div class="cr-popup-content">
             <h2>Login</h2>
             <img class="cr-close" id="close-popup-login" src="resources/images/cancel-24px.svg" alt="Quit">
             <form method="POST" action="/login" id="cr-login-form">
@@ -24,8 +24,8 @@
        </div>
     </div>
 
-    <div class="cr-signup-popup">
-        <div class="cr-signup-popup-content">
+    <div id="signup-popup" class="cr-popup cr-hidden">
+        <div class="cr-popup-content">
              <h2>Sign Up</h2>
              <img class="cr-close" id="close-popup-signup" src="resources/images/cancel-24px.svg" alt="Quit">
              <form method="POST" action="/signup" id="cr-signup-form">

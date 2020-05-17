@@ -3,14 +3,6 @@ const chat = document.getElementById('cr-chat');
 const chatBox = document.getElementById('cr-chat-container');
 const accountDetailsButton = document.getElementById('account-details-button');
 
-// startup //
-window.onload = function() {
-    
-}
-
-// account logged in listener // 
-
-
 // CR-Chat Listener //
 chat.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -42,17 +34,17 @@ socket.on('consoleMessage', message => {
 
 // Login and Sign-Up Animations //
 document.getElementById("login-button").addEventListener("click", function() {
-    document.querySelector(".cr-login-popup").style.display = "flex";
+    document.getElementById("login-popup").classList.remove("cr-hidden");
 });
 
 document.getElementById("signup-button").addEventListener("click", function() {
-    document.querySelector(".cr-signup-popup").style.display = "flex";
+    document.getElementById("signup-popup").classList.remove("cr-hidden");
 });
 
 document.getElementById("close-popup-login").addEventListener("click", function() {
-    document.querySelector(".cr-login-popup").style.display = "none";
+    document.getElementById("login-popup").classList.add("cr-hidden");
 });
 
 document.getElementById("close-popup-signup").addEventListener("click", function() {
-    document.querySelector(".cr-signup-popup").style.display = "none";
+    document.getElementById("signup-popup").classList.add("cr-hidden");
 });

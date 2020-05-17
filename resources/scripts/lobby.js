@@ -4,7 +4,9 @@ const draw = document.getElementById('cr-draw');
 const chatBox = document.getElementById('cr-chat-container');
 const startGameScreen = document.getElementById('cr-game-start');
 const joinButton = document.getElementById('cr-game-join');
+const startButton = document.getElementById('cr-game-start-button');
 const leaveButton = document.getElementById('cr-game-leave');
+const playerList = document.getElementById('cr-player-list');
 
 let id;
 let user;
@@ -27,15 +29,24 @@ socket.on('foundInfo', userInfo => {
 })
 
 socket.on('getGameInfo', gameInfo => {
-    console.log(gameInfo.player_list);
-    if (gameInfo) {
-        console.log(gameInfo.player_list);
+    if (gameInfo.player_list) {
         if (gameInfo.player_list.includes(user.id)) {
             joinButton.classList.add('cr-hidden');
             leaveButton.classList.remove('cr-hidden');
             this.gameInfo = gameInfo;
+        } else {
+            joinButton.classList.remove('cr-hidden');
+            leaveButton.classList.add('cr-hidden');
+        }
+
+        playerList.innerHTML = '';
+        for (let i = 0; i < gameInfo.player_list.length; i++) {
+            playerList.innerHTML += '<h2>' + gameInfo.player_list[i] + '</h2>';
         }
     }
+
+    if (gameInfo.player_list[0] == user.id && gameInfo.player_list.length > 1) startButton.classList.remove('cr-hidden');
+    else startButton.classList.add('cr-hidden');
 })
 
 // CR-Chat Listener //
@@ -86,17 +97,12 @@ draw.addEventListener('submit', (e) => {
 joinButton.addEventListener('submit', (e) => {
     e.preventDefault();
     socket.emit('joinGame', user);
-    joinButton.classList.add('cr-hidden');
-    leaveButton.classList.remove('cr-hidden');
 })
 
 // leave game listener
-// join game listener
 leaveButton.addEventListener('submit', (e) => {
     e.preventDefault();
     socket.emit('leaveGame', user);
-    leaveButton.classList.add('cr-hidden');
-    joinButton.classList.remove('cr-hidden');
 })
 
 

@@ -76,33 +76,54 @@ io.on('connection', (socket) => {
     socket.broadcast.to(user.lobby).emit('consoleMessage', user.username + ' has joined the chat.');
     socket.user = user;
 
-    db.any(`SELECT lobby_id FROM lobby_info`)
-    .then (results => {
-      let lobby = results.find(lobby => lobby.lobby_id === parseInt(user.lobby));
-      if (!lobby) {
-        db.any(`INSERT INTO lobby_info VALUES (${user.lobby})`)
-        .then(() => {
-          db.any(`UPDATE lobby_info SET player_list = array_append(player_list, '${user.id}') WHERE lobby_id = ${user.lobby}`)
-        }) 
-      } else {
-        db.any(`UPDATE lobby_info SET player_list = array_remove(player_list, ${user.id})`)
-        .then(() => {
-          db.any(`UPDATE lobby_info SET player_list = array_append(player_list, '${user.id}') WHERE lobby_id = ${user.lobby}`)
-        })
-      }
-    })
-
     db.any(`SELECT * FROM lobby_info`)
-    .then(results => {
-      let gameInfo = results.find(lobby => lobby.lobby_id === parseInt(user.lobby));
-      console.log(gameInfo);
-      io.in(user.lobby).emit('getGameInfo', gameInfo);
-    })
+      .then(results => {
+        let gameInfo = results.find(gameInfo => gameInfo.lobby_id === parseInt(user.lobby));
+        if (gameInfo) io.to(user.lobby).emit('getGameInfo', gameInfo);
+      })
+  })
+
+  socket.on('joinGame', (user) => {
+    db.any(`SELECT lobby_id FROM lobby_info`)
+      .then(results => {
+        let lobby = results.find(lobby => lobby.lobby_id === parseInt(user.lobby));
+        if (!lobby) {
+          db.any(`INSERT INTO lobby_info VALUES (${user.lobby})`)
+            .then(() => {
+              db.any(`UPDATE lobby_info SET player_list = array_append(player_list, '${user.id}') WHERE lobby_id = ${user.lobby}`)
+              .then (() => {
+                db.any(`SELECT * FROM lobby_info`)
+                .then(results => {
+                  let gameInfo = results.find(lobby => lobby.lobby_id === parseInt(user.lobby));
+                  io.to(gameInfo.lobby_id).emit('getGameInfo', gameInfo);
+                })
+              })
+            })
+        } else {
+          db.any(`UPDATE lobby_info SET player_list = array_remove(player_list, ${user.id})`)
+            .then(() => {
+              db.any(`UPDATE lobby_info SET player_list = array_append(player_list, '${user.id}') WHERE lobby_id = ${user.lobby}`)
+              .then(() => {
+                db.any(`SELECT * FROM lobby_info`)
+                .then(results => {
+                  let gameInfo = results.find(lobby => lobby.lobby_id === parseInt(user.lobby));
+                  io.to(gameInfo.lobby_id).emit('getGameInfo', gameInfo);
+                })
+              })
+            })
+        }
+      })
   })
 
   socket.on('leaveGame', (user) => {
     db.any(`UPDATE lobby_info SET player_list = array_remove(player_list, ${user.id})`)
-    io.to(user.lobby).emit('updatePlayerList');
+      .then(() => {
+        db.any(`SELECT * FROM lobby_info`)
+          .then(results => {
+            let gameInfo = results.find(gameInfo => gameInfo.lobby_id === parseInt(user.lobby));
+            io.to(gameInfo.lobby_id).emit('getGameInfo', gameInfo);
+          })
+      })
   })
 
   socket.on('disconnect', () => {
@@ -111,7 +132,8 @@ io.on('connection', (socket) => {
 
   // Listen incoming chats//
   socket.on('chatMessage', (message) => {
-    io.to(message.lobby).emit('message', message);
+    console.log(message.lobby);
+    io.in(message.lobby).emit('message', message);
   })
 
   socket.on('retrieveInfo', (id) => {
@@ -119,7 +141,7 @@ io.on('connection', (socket) => {
       .then(results => {
         user = results.find(user => user.id === id);
         delete user.password;
-        
+
         socket.emit('foundInfo', user);
       })
   })

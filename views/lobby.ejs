@@ -12,6 +12,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <div class="main-container">
+    <div class="cr-popup cr-hidden">
+        <div class="cr-popup-content">
+             <h2>Warning</h2>
+             <img class="cr-close" id="close-popup-leave" src="resources/images/cancel-24px.svg" alt="Quit">
+             <form id="cr-login-form">
+                 <h3>You are about to leave the game.</h3>
+                 <button class="cr-button">Confirm</button>
+             </form>
+        </div>
+     </div>
     <header class="cr-header d-flex justify-content-between">
         <h1 class="cr-main-title">Card Royale.</h1>
         <div class="cr-login"> 
@@ -31,12 +41,15 @@
                 <div id="cr-game-start" class="cr-game-start">
                     <h2 class="cr-title">Welcome to CardRoyale.</h2>
                     <div>Players</div>
-                    <div id="player-list"></div>
+                    <div id="cr-player-list"></div>
                     <form id="cr-game-join">
                         <button class="cr-button">Join</button>
                     </form>
                     <form class="cr-hidden" id="cr-game-leave">
                         <button class="cr-button">Leave</button>
+                    </form>
+                    <form id="cr-game-start-button" class="cr-hidden">
+                        <button class="cr-start-button cr-button">Start Game</button>
                     </form>
                 </div>
                 <div class="cr-game-progress">
