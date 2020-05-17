@@ -1,10 +1,14 @@
 const socket = io();
 const chat = document.getElementById('cr-chat');
+const draw = document.getElementById('cr-draw');
 const chatBox = document.getElementById('cr-chat-container');
-const accountDetailsButton = document.getElementById('account-details-button');
+const startGameScreen = document.getElementById('cr-game-start');
+const joinButton = document.getElementById('cr-game-join');
+const leaveButton = document.getElementById('cr-game-leave');
 
 let id;
 let user;
+let gameInfo;
 
 socket.on('connect', () => {
     id = socket.id;
@@ -22,6 +26,18 @@ socket.on('foundInfo', userInfo => {
     socket.emit('joinRoom', user);
 })
 
+socket.on('getGameInfo', gameInfo => {
+    console.log(gameInfo.player_list);
+    if (gameInfo) {
+        console.log(gameInfo.player_list);
+        if (gameInfo.player_list.includes(user.id)) {
+            joinButton.classList.add('cr-hidden');
+            leaveButton.classList.remove('cr-hidden');
+            this.gameInfo = gameInfo;
+        }
+    }
+})
+
 // CR-Chat Listener //
 chat.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -34,20 +50,43 @@ chat.addEventListener('submit', (e) => {
             lobby: user.lobby
         };
 
-        const form = document.getElementById('cr-chat');
-        form.reset();
+        chat.reset();
     
         socket.emit('chatMessage', message);
     }
-    
 })
+
+// draw listener
+draw.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const domNode = document.createElement('div');
+    domNode.innerHTML = '<div class="cr-card-inhand cr-card-front">' + Math.floor((Math.random() * 9) + 1); + '</div>'
+    document.querySelector('.cr-game-hand').appendChild(domNode);
+})
+
+// join game listener
+joinButton.addEventListener('submit', (e) => {
+    e.preventDefault();
+    socket.emit('joinGame', user);
+    joinButton.classList.add('cr-hidden');
+    leaveButton.classList.remove('cr-hidden');
+})
+
+// leave game listener
+// join game listener
+leaveButton.addEventListener('submit', (e) => {
+    e.preventDefault();
+    socket.emit('leaveGame', user);
+    leaveButton.classList.add('cr-hidden');
+    joinButton.classList.remove('cr-hidden');
+})
+
 
 socket.on('message', message => {
     const domNode = document.createElement('div');
     domNode.classList.add('cr-chat-message');
-    domNode.innerHTML = '<p class="chat-meta">' + message.username +'</p>' + 
-                        '<p class="chat-text" style="margin: 0px">' + message.text + '</p>' +
-                        '<p class="chat-meta" style="text-align: right">' + message.time + '</p>';
+    domNode.innerHTML = '<p class="cr-chat-name">' + message.username + ': </p><p class="cr-chat-message-content">' + message.text + '</p>';
+                        //'<p class="chat-meta" style="text-align: right">' + message.time + '</p>';
     
     document.querySelector('.cr-chat-box').appendChild(domNode);
     chatBox.scrollTop = chatBox.scrollHeight;
