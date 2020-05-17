@@ -59,8 +59,26 @@ chat.addEventListener('submit', (e) => {
 // draw listener
 draw.addEventListener('submit', (e) => {
     e.preventDefault();
+    let randomColor = Math.floor((Math.random() * 5) + 1);
+    console.log(randomColor);
     const domNode = document.createElement('div');
-    domNode.innerHTML = '<div class="cr-card-inhand cr-card-front">' + Math.floor((Math.random() * 9) + 1); + '</div>'
+    switch (randomColor) {
+        case 1: 
+            domNode.innerHTML = '<div class="cr-card-inhand cr-card-red cr-card-front">' + Math.floor((Math.random() * 9) + 1); + '</div>';
+            break;
+        case 2: 
+            domNode.innerHTML = '<div class="cr-card-inhand cr-card-yellow cr-card-front">' + Math.floor((Math.random() * 9) + 1); + '</div>';
+            break;
+        case 3: 
+            domNode.innerHTML = '<div class="cr-card-inhand cr-card-green cr-card-front">' + Math.floor((Math.random() * 9) + 1); + '</div>';
+            break;
+        case 4: 
+            domNode.innerHTML = '<div class="cr-card-inhand cr-card-blue cr-card-front">' + Math.floor((Math.random() * 9) + 1); + '</div>';
+            break;
+        case 5:
+            domNode.innerHTML = '<div class="cr-card-inhand cr-card-rainbow cr-card-front">' + Math.floor((Math.random() * 9) + 1); + '</div>';
+            break;
+    }
     document.querySelector('.cr-game-hand').appendChild(domNode);
 })
 

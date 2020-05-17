@@ -1,40 +1,28 @@
-/**
-    Color Reference:
-    Main Blue:          #197278
-    Secondary Blue:     #283D3B
-    Off-White:          #EDDDD4
-    Link Colors:        #C44536;
-                        #772E25;
-    Aquamarine:         #4CE0B3
-    Ruby:               #D81E5B
-    Blush:              #E75A7C
-    Papaya Whip         #FDF0D5
-    Opal                #C6D8D3
-    Twilight Lavender   #80475E
-    Baby Powder:        #FBFEF9
-**/
-
 :root {
-    --cr-ruby: #D81E5B;
-    --cr-lavender: #80475E;
-    --cr-white: #FBFEF9;
-    --cr-black: #1B2021;
-    --cr-blush: #E75A7C;
-    --cr-opal: #C6D8D3;
+    --cr-red1: #D81E5B;
+    --cr-red2: #80475E;
+    --cr-red3: #E75A7C;
 
-    --cr-green4: #629677;
-    --cr-green5: #495D63;
-    --cr-green3: #98B6B1;
+    --cr-yellow1: #FFBA49;
 
     --cr-green1: #197278;
     --cr-green2: #283D3B;
+    --cr-green3: #98B6B1;
+    --cr-green4: #629677;
+    --cr-green5: #495D63;
+    --cr-green6: #2FBF71;
 
-    /* Adjust Here */
+    --cr-blue1: #007FFF;
+
+    --cr-white: #FBFEF9;
+    --cr-black: #1B2021;
+    --cr-gray: #C6D8D3;
+
     --cr-main: var(--cr-green1);
     --cr-accent-primary: var(--cr-green2);
     --cr-accent-secondary: var(--cr-green3);
     --cr-bg: var(--cr-white);
-    --cr-text: #1B2021;
+    --cr-text: var(--cr-black);
 }
 
 @font-face {
@@ -59,7 +47,7 @@
 
 .cr-header {
     padding: 10px 25px 5px 25px;
-    background-color: var(--cr-main);
+    background-color: var(--cr-main); 
     color: var(--cr-white);
     border-bottom: 5px solid var(--cr-accent-primary);
 }
@@ -201,7 +189,7 @@
 }
 
 .cr-lobby-list {
-    background: var(--cr-opal);
+    background: var(--cr-gray);
     width: 250px;
 }
 
@@ -227,7 +215,7 @@
 .cr-game-hand {
     position: absolute;
     bottom: 0px;
-    background-color: var(--cr-white);
+    background-color: var(--cr-black);
     margin: 20px;
     padding: 15px 10px 20px 10px;
     width: 760px;
@@ -238,10 +226,8 @@
 }
 
 .cr-card-inhand {
-    background: var(--cr-ruby);
     margin: 0px 5px;
     padding: 20px;
-
 }
 
 .cr-card-inhand:hover {
@@ -258,6 +244,26 @@
     float: left;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
+}
+
+.cr-card-red {
+    background-color: var(--cr-red1);
+}
+
+.cr-card-yellow {
+    background-color: var(--cr-yellow1);
+}
+
+.cr-card-green {
+    background-color: var(--cr-green6);
+}
+
+.cr-card-blue {
+    background-color: var(--cr-blue1);
+}
+
+.cr-card-rainbow {
+    background-image: linear-gradient(to bottom right, var(--cr-red1), var(--cr-yellow1), var(--cr-green6), var(--cr-blue1));
 }
 
 .cr-card-back {
