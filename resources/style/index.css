@@ -1,44 +1,42 @@
-/**
-    Color Reference:
-    Main Blue:          #197278
-    Secondary Blue:     #283D3B
-    Off-White:          #EDDDD4
-    Link Colors:        #C44536;
-                        #772E25;
-    Aquamarine:         #4CE0B3
-    Ruby:               #D81E5B
-    Blush:              #E75A7C
-    Papaya Whip         #FDF0D5
-    Opal                #C6D8D3
-    Twilight Lavender   #80475E
-    Baby Powder:        #FBFEF9
-**/
-
 :root {
-    --cr-ruby: #D81E5B;
-    --cr-lavender: #80475E;
-    --cr-white: #FBFEF9;
-    --cr-black: #1B2021;
-    --cr-blush: #E75A7C;
-    --cr-opal: #C6D8D3;
+    --cr-red1: #D81E5B;
+    --cr-red2: #80475E;
+    --cr-red3: #E75A7C;
 
-    --cr-green4: #629677;
-    --cr-green5: #495D63;
-    --cr-green3: #98B6B1;
+    --cr-yellow1: #FFBA49;
 
     --cr-green1: #197278;
     --cr-green2: #283D3B;
+    --cr-green3: #98B6B1;
+    --cr-green4: #629677;
+    --cr-green5: #495D63;
+    --cr-green6: #2FBF71;
 
-    /* Adjust Here */
+    --cr-blue1: #007FFF;
+
+    --cr-white: #FBFEF9;
+    --cr-black: #1B2021;
+    --cr-gray: #C6D8D3;
+
     --cr-main: var(--cr-green1);
     --cr-accent-primary: var(--cr-green2);
     --cr-accent-secondary: var(--cr-green3);
     --cr-bg: var(--cr-white);
-    --cr-text: #1B2021;
+    --cr-text: var(--cr-black);
+}
+
+@font-face {
+    font-family: 'Gotham Medium';
+    src: url("/resources/font/Gotham-Medium_0.otf") format("opentype");
+}
+
+@font-face {
+    font-family: 'Gotham Light';
+    src: url("/resources/font/Gotham-Light_0.otf") format("opentype");
 }
 
 .main-container {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Gotham Medium';
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
@@ -49,11 +47,12 @@
 
 .cr-header {
     padding: 10px 25px 5px 25px;
-    background-color: var(--cr-main);
+    background-color: var(--cr-main); 
     color: var(--cr-white);
     border-bottom: 5px solid var(--cr-accent-primary);
 }
 .cr-main-title {
+    margin-top: 8px;
     font-size: 40px;
     font-weight: bold;
 }
@@ -65,7 +64,7 @@
 
 .cr-button {
     height: 40px;
-    margin-top: 5px;
+    margin-top: 10px;
     font-size: 20px;
     font-weight: bold;
     color: var(--cr-white);
@@ -148,7 +147,9 @@
 }
 
 .cr-login-popup-content input {
+    font-family: 'Gotham Light';
     margin: 20px auto !important;
+    font-weight: normal;
     display: block;
     width: 75%;
     padding: 10px;
@@ -157,6 +158,7 @@
 }
 
 .cr-signup-popup-content input {
+    font-family: 'Gotham Light';
     margin: 20px auto !important;
     display: block;
     width: 75%;
@@ -187,13 +189,146 @@
 }
 
 .cr-lobby-list {
-    background: var(--cr-opal);
+    background: var(--cr-gray);
     width: 250px;
 }
 
 .cr-game-content {
     background: var(--cr-green1);
     width: 800px;
+    text-align: center;
+}
+
+.cr-game-start {
+    position: absolute;
+    padding: 20px;
+    width: 800px;
+    height: 100%;
+    background: var(--cr-green1);
+    z-index: 5;
+}
+
+.cr-game-progoress {
+    z-index: 1;
+}
+
+.cr-game-hand {
+    position: absolute;
+    bottom: 0px;
+    background-color: var(--cr-black);
+    margin: 20px;
+    padding: 15px 10px 20px 10px;
+    width: 760px;
+    height: 165px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+}
+
+.cr-card-inhand {
+    margin: 0px 5px;
+    padding: 20px;
+}
+
+.cr-card-inhand:hover {
+    transform: scale(1.2,1.2);
+}
+
+.cr-card-front {
+    border-radius: 5px;
+    height: 120px;
+    width:  80px;
+    color: var(--cr-white);
+    font-weight: bold;
+    font-size: 56px;
+    float: left;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.cr-card-red {
+    background-color: var(--cr-red1);
+}
+
+.cr-card-yellow {
+    background-color: var(--cr-yellow1);
+}
+
+.cr-card-green {
+    background-color: var(--cr-green6);
+}
+
+.cr-card-blue {
+    background-color: var(--cr-blue1);
+}
+
+.cr-card-rainbow {
+    background-image: linear-gradient(to bottom right, var(--cr-red1), var(--cr-yellow1), var(--cr-green6), var(--cr-blue1));
+}
+
+.cr-card-back {
+    background: var(--cr-black);
+    border-radius: 5px;
+    margin: 0px 10px;
+    padding-top: 6px;
+    height: 120px;
+    width:  80px;
+    border: 10px solid var(--cr-white);
+    color: var(--cr-white);
+    font-weight: bold;
+    font-size: 56px;
+    cursor: pointer;
+}
+
+.cr-draw-card {
+    position: absolute;
+    top: 50%;
+    left: 660px;
+}
+
+.cr-draw-card:focus {
+    outline: none;
+}
+
+.cr-discard-card {
+    position: absolute;
+    top: 50%;
+    left: 540px;
+    background: var(--cr-green4);
+    border-radius: 5px;
+    margin: 0px 10px;
+    padding-top: 15px;
+    height: 120px;
+    width:  80px;
+    color: var(--cr-white);
+    font-weight: bold;
+    font-size: 56px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.cr-game-left-card {
+    position: absolute;
+    top: 200px;
+    left: 280px;
+    transform: rotate(90deg);
+}
+
+.cr-game-right-card {
+    position: absolute;
+    top: 200px;
+    left: 920px;
+    transform: rotate(-90deg);
+}
+
+.cr-game-enemy-top {
+    text-align: center;
+    display: flex;
+}
+
+.cr-game-top-card {
+    margin: 0px auto;
+    transform: rotate(180deg);
 }
 
 .cr-chat {
@@ -202,19 +337,41 @@
     text-align: center;
 }
 
-.cr-chat h2 {
+.cr-title {
+    padding: 20px;
     font-weight: bold;
+    margin: 0px;
     text-align: center;
     color: var(--cr-white);
-    transform: translate(0%, 25%);
+    font-size: 32px;
+}
+
+.chat-input {
+    padding: 20px;
+    position: relative;
+    height: 30px;
+    width: 450px;
+    border-radius: 5px;
+    border: none;
+}
+
+.chat-input input {
+    width: 340px;
+    border-radius: 5px;
+}
+
+.chat-send {
+    border: none;
+    background: var(--cr-green2);
+    color: var(--cr-white);
+}
+
+.chat-send:focus {
+    outline: none;
 }
 
 .cr-chat input {
-    position: relative;
-    height: 33px;
-    width: 340px;
-    border-radius: 5px;
-    border: none;
+    font-family: 'Gotham Light';
 }
 
 .cr-chat input:focus {
@@ -223,26 +380,32 @@
 
 .cr-chat-box {
     background: var(--cr-white);
-    margin-top: 20px;
-    margin-bottom: 10px;
+    padding: 10px;
     width: 450px;
-    height: 620px;
-    border-right: 20px var(--cr-green5) solid;
-    border-left: 20px var(--cr-green5) solid;
+    height: 600px;
     overflow-y: auto;
+    border-left: 20px solid var(--cr-green5);
+    border-right: 20px solid var(--cr-green5);
 }
 
-.cr-chat-box .cr-chat-message {
-    background-color: var(--cr-white);
+.cr-chat-message {
+    display: flex;
+    color: var(--cr-black);
     font-size: 12px;
     text-align: left;
-    padding: 0px 10px;
+    font-size: 16px;
+    border-bottom: 1px dashed var(--cr-green3);
 }
 
-.cr-chat-message .chat-meta {
-    font-size: 10px;
+.cr-chat-name {
+    font-family: 'Gotham Medium';
     margin: 0px;
-    font-weight: bold;
+    font-size: 16px;
+}
+
+.cr-chat-message-content {
+    font-family: 'Gotham Light';
+    margin: 0px 0px 0px 5px;
 }
 
 .cr-lobby-list {
@@ -254,12 +417,13 @@
     display: inline-block;
     cursor: pointer;
     width: 200px;
-    height: 36px;
+    height: 60px;
     background: var(--cr-green5);
     text-align: center;
     border-radius: 5px;
+    padding-top: 5px;
     margin-bottom: 5px;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .cr-lobby-list .cr-add-lobby:hover {
@@ -279,6 +443,10 @@
     font-style: italic;
     font-size: 12px;
     color: var(--cr-green5);
+}
+
+.cr-hidden {
+    display: none;
 }
 
 /**
@@ -336,9 +504,3 @@ This is where the classes to customize the game and cards will be implemented
     text-align: center;
     font-weight: bold;
 }
-
-
-
-
-
-

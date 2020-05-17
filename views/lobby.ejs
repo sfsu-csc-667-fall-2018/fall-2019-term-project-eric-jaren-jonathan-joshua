@@ -45,15 +45,45 @@
                     <div id="card11"></div>
                     <div id="card12"></div>
                     <div id="card13"></div>
-            </div>
-                    
+
+                    <div id="cr-game-start" class="cr-game-start">
+                        <h2 class="cr-title">Welcome to CardRoyale.</h2>
+                        <div>Players</div>
+                        <div id="player-list"></div>
+                        <form id="cr-game-join">
+                            <button class="cr-button">Join</button>
+                        </form>
+                        <form class="cr-hidden" id="cr-game-leave">
+                            <button class="cr-button">Leave</button>
+                        </form>
+                    </div>
+                    <div class="cr-game-progress">
+                        <h2 class="cr-title"><%= name %>'s Turn</h2>
+                        <div class="cr-game-enemy-right">
+                            <div class="cr-card-back cr-game-right-card">?</div>
+                        </div>
+                        <div class="cr-game-enemy-top">
+                            <div class="cr-card-back cr-game-top-card">?</div>
+                        </div>
+                        <div class="cr-game-enemy-left">
+                            <div class="cr-card-back cr-game-left-card">?</div>
+                        </div>
+                        <div class="cr-game-draw">
+                            <div class="cr-discard-card">?</div>
+                            <form id="cr-draw">
+                                <button class="cr-card-back cr-draw-card">?</button>
+                            </form>
+                        </div>
+                        <div class="cr-game-hand"></div>
+                    </div>
+                </div>
             </div>
             <div class="cr-chat column">
-                <h2 class="cr-chat-title">Chat</h2>
+                <h2 class="cr-title">Chat</h2>
                 <div id="cr-chat-container" class="cr-chat-box"></div>
                 <form id="cr-chat" class="chat-input">
                     <input id="message" autocomplete="off" type="text" placeholder="Type Here...">
-                    <button class="cr-button">Send</button>
+                    <button class="chat-send">Send</button>
                 </form>
             </div>
         </div>
