@@ -456,7 +456,7 @@ This is where the classes to customize the game and cards will be implemented
 
 .cards-in-hand{
     background-color: gray;
-    overflow-y: scroll;
+    overflow-x: scroll;
     width: 800px;
     height: 180px;
     margin-bottom: auto;
