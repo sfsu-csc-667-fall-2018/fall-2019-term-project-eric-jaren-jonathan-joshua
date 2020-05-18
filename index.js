@@ -18,7 +18,7 @@ const initializePassport = require('./passport-config');
 const Game = require('./models/game');
 let gameArray = [];
 
-const port = process.env.PORT || 8096;
+const port = process.env.PORT;
 const server = http.createServer(app);
 const io = socket(server);
 
