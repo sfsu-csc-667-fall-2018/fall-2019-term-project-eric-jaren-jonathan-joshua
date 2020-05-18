@@ -119,8 +119,8 @@ input:focus {
 
 .cr-popup-content {
     padding: 40px;
-    width: 600px;
-    height: 320px;
+    min-width: 600px;
+    min-height: 320px;
     position: relative;
     background: var(--cr-main);
     text-align: center;  
@@ -326,7 +326,30 @@ input:focus {
     margin: 0px;
     text-align: center;
     color: var(--cr-white);
+}
+h2.cr-title {
     font-size: 32px;
+}
+
+h3.cr-title {
+    font-size: 24px;
+}
+
+.cr-players {
+    margin: 120px auto;
+}
+
+.cr-q-button {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translate(-50%);
+    
+}
+
+.cr-player-list {
+    font-size: 32px;
+    color: var(--cr-white);
 }
 
 .chat-input {
@@ -365,10 +388,15 @@ input:focus {
     background: var(--cr-white);
     padding: 10px;
     width: 450px;
-    height: 600px;
+    height: 540px;
     overflow-y: auto;
     border-left: 20px solid var(--cr-green5);
     border-right: 20px solid var(--cr-green5);
+}
+
+.cr-chat-mode {
+    margin-left: 70px !important;
+    margin-top: 20px !important;
 }
 
 .cr-chat-message {
@@ -378,6 +406,13 @@ input:focus {
     text-align: left;
     font-size: 16px;
     border-bottom: 1px dashed var(--cr-green3);
+}
+
+.cr-chat-button {
+    background: var(--cr-green2);
+    font-size: 16px;
+    padding: 0px 10px;
+    margin: 0px 20px;
 }
 
 .cr-chat-name {
@@ -431,3 +466,79 @@ input:focus {
 .cr-hidden {
     display: none;
 }
+
+.cr-outline {
+    outline: 5px outset var(--cr-green3);
+}
+
+.cr-turn {
+    outline: 5px outset var(--cr-green3);
+    animation: animatedOutline 0.5s infinite alternate;
+}
+
+.cr-welcome {
+    width: 1050px;
+    height: 750px;
+    text-align: center;
+    transform: translate(0px, 240px)
+}
+
+h1.cr-jumbo-title {
+    color: var(--cr-black);
+    font-weight: bold;
+    font-size: 72px;
+}
+
+h2.cr-jumbo-title {
+    color: var(--cr-black);
+    font-size: 36px;
+}
+
+.cr-intro-chat {
+    height: 750px;
+    overflow-y: hidden;
+    width: 450px;
+}
+
+@keyframes animatedOutline {
+    from {outline: 10px outset var(--cr-red3);}
+    to {outline: 10px outset var(--cr-white);}
+}
+
+.cr-welcome-animate {
+    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 2s; /* Firefox < 16 */
+        -ms-animation: fadein 2s; /* Internet Explorer */
+         -o-animation: fadein 2s; /* Opera < 12.1 */
+            animation: fadein 2s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+

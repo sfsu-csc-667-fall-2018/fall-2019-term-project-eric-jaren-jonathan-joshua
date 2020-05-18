@@ -12,14 +12,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <div class="main-container">
-    <div class="cr-popup cr-hidden">
-        <div class="cr-popup-content">
-             <h2>Warning</h2>
-             <img class="cr-close" id="close-popup-leave" src="resources/images/cancel-24px.svg" alt="Quit">
-             <form id="cr-login-form">
-                 <h3>You are about to leave the game.</h3>
-                 <button class="cr-button">Confirm</button>
-             </form>
+    <div id="cr-winner" class="cr-popup cr-hidden">
+        <div id="cr-winner-content" class="cr-popup-content">
+             <img class="cr-close" id="close-popup-winner" src="resources/images/cancel-24px.svg" alt="Quit">
         </div>
      </div>
     <header class="cr-header d-flex justify-content-between">
@@ -40,13 +35,15 @@
             <div class="cr-game-content column">
                 <div id="cr-game-start" class="cr-game-start">
                     <h2 class="cr-title">Welcome to CardRoyale.</h2>
-                    <div>Players</div>
+                    <div class="cr-players">
+                        <h3 class="cr-title">Players</h3>
                     <div id="cr-player-list"></div>
+                    </div>
                     <form id="cr-game-join">
-                        <button class="cr-button">Join</button>
+                        <button class="cr-q-button cr-button">Join</button>
                     </form>
                     <form class="cr-hidden" id="cr-game-leave">
-                        <button class="cr-button">Leave</button>
+                        <button class="cr-q-button cr-button">Leave</button>
                     </form>
                     <form id="cr-game-start-button" class="cr-hidden">
                         <button class="cr-start-button cr-button">Start Game</button>
@@ -78,6 +75,19 @@
             <div class="cr-chat column">
                 <h2 class="cr-title">Chat</h2>
                 <div id="cr-chat-container" class="cr-chat-box"></div>
+                <div class="cr-chat-mode row">
+                    <div class="column">
+                        <form id="cr-lobby-chat">
+                            <button id="lobby" class="cr-chat-button cr-button">Lobby Chat</button>
+                        </form>
+                    </div>
+                    <div class="column">
+                        <form id="cr-global-chat">
+                            <button id="global" class="cr-chat-button cr-button">Global Chat</button>
+                        </form>
+                    </div>
+                </div>
+
                 <form id="cr-chat" class="chat-input">
                     <input id="message" autocomplete="off" type="text" placeholder="Type Here...">
                     <button class="chat-send">Send</button>

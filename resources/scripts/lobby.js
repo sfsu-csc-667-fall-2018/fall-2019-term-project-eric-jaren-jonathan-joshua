@@ -15,14 +15,24 @@ const enemyTop = document.getElementById('cr-enemy-top');
 const enemyLeft = document.getElementById('cr-enemy-left');
 const enemyRight = document.getElementById('cr-enemy-right');
 
+const globalChatButton = document.getElementById('cr-global-chat');
+const lobbyChatButton = document.getElementById('cr-lobby-chat');
+
+const lobbyButton = document.getElementById('lobby');
+const globalButton = document.getElementById('global');
+
 let id;
 let user;
 let currentHand;
 let discard;
 let turn;
+let players;
+
+let lobbyToggle;
 
 socket.on('connect', () => {
     id = socket.id;
+    lobbyToggle = true;
 })
 
 socket.on('userInfo', user => {
@@ -48,11 +58,12 @@ socket.on('getGameInfo', gameInfo => {
                 joinButton.classList.remove('cr-hidden');
                 leaveButton.classList.add('cr-hidden');
             }
+        }
 
-            playerList.innerHTML = '';
-            for (let i = 0; i < gameInfo.player_list.length; i++) {
-                playerList.innerHTML += '<h2>' + gameInfo.player_list[i] + '</h2>';
-            }
+        players = [];
+        playerList.innerHTML = '';
+        for (let i = 0; i < gameInfo.player_list.length; i++) {
+            socket.emit('findUserById', gameInfo.player_list[i]);
         }
 
         if (gameInfo.player_list[0] == user.id && gameInfo.player_list.length > 1) startButton.classList.remove('cr-hidden');
@@ -61,6 +72,20 @@ socket.on('getGameInfo', gameInfo => {
         startGameScreen.classList.add('cr-hidden');
         socket.emit('forceUpdate', user);
     }
+})
+
+socket.on('gameWinner', user => {
+    const lobby = {
+        lobby_id: user.lobby,
+        game_state: 0
+    }
+    
+    socket.emit('changeGameState', lobby);
+})
+
+socket.on('foundUsername', user => {
+    players.push(user);
+    playerList.innerHTML += '<div class="cr-player-list">' + user.username + '</div>';
 })
 
 socket.on('updateGame', (gameInfo) => {
@@ -79,10 +104,12 @@ socket.on('updateGame', (gameInfo) => {
     findCardByID(discardStack, discard, '');
 
     if (gameInfo.gameInfo.player_list[gameInfo.gameInfo.turn] == user.id) {
+        playerHand.classList.add('cr-turn');
         turnHeader.innerHTML = 'Your Turn';
         turn = true;
     } else {
-        turnHeader.innerHTML = gameInfo.gameInfo.player_list[gameInfo.gameInfo.turn] + '\'s Turn'
+        playerHand.classList.remove('cr-turn');
+        turnHeader.innerHTML = players[gameInfo.gameInfo.turn].username + '\'s Turn';
         turn = false;
     }
 
@@ -99,23 +126,41 @@ socket.on('updateGame', (gameInfo) => {
         enemyRight.classList.remove('cr-hidden');
         enemyTop.classList.remove('cr-hidden');
     }
+
+    if (gameInfo.gameInfo.player_list[0] == user.id) endButton.classList.remove('cr-hidden');
+    else endButton.classList.add('cr-hidden');
 })
 
 // CR-Chat Listener //
 chat.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    if (e.target.elements.message.value) {
-        const message = {
-            username: user.username,
-            text: e.target.elements.message.value,
-            time: new Date().toLocaleString(),
-            lobby: user.lobby
-        };
-
-        chat.reset();
-
-        socket.emit('chatMessage', message);
+    if (lobbyToggle) {
+        if (e.target.elements.message.value) {
+            const message = {
+                username: user.username,
+                text: e.target.elements.message.value,
+                time: new Date().toLocaleString(),
+                lobby: user.lobby
+            };
+    
+            chat.reset();
+    
+            socket.emit('chatMessage', message);
+        }
+    } else {
+        if (e.target.elements.message.value) {
+            const message = {
+                username: user.username,
+                text: e.target.elements.message.value,
+                time: new Date().toLocaleString(),
+                lobby: user.lobby
+            };
+    
+            chat.reset();
+    
+            socket.emit('globalChatMessage', message);
+        }
     }
 })
 
@@ -173,23 +218,51 @@ playerHand.addEventListener('click', (e) => {
     }
 })
 
-socket.on('message', message => {
-    const domNode = document.createElement('div');
-    domNode.classList.add('cr-chat-message');
-    domNode.innerHTML = '<p class="cr-chat-name">' + message.username + ': </p><p class="cr-chat-message-content">' + message.text + '</p>';
-    //'<p class="chat-meta" style="text-align: right">' + message.time + '</p>';
+globalChatButton.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-    document.querySelector('.cr-chat-box').appendChild(domNode);
-    chatBox.scrollTop = chatBox.scrollHeight;
+    chatBox.innerHTML = '';
+    lobbyToggle = false;
+})
+
+lobbyChatButton.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    chatBox.innerHTML = '';
+    lobbyToggle = true;
+})
+
+socket.on('message', message => {
+    if (lobbyToggle) {
+        const domNode = document.createElement('div');
+        domNode.classList.add('cr-chat-message');
+        domNode.innerHTML = '<p class="cr-chat-name">' + message.username + ': </p><p class="cr-chat-message-content">' + message.text + '</p>';
+
+        document.querySelector('.cr-chat-box').appendChild(domNode);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+})
+
+socket.on('globalMessage', message => {
+    if (!lobbyToggle) {
+        const domNode = document.createElement('div');
+        domNode.classList.add('cr-chat-message');
+        domNode.innerHTML = '<p class="cr-chat-name">' + message.username + ': </p><p class="cr-chat-message-content">' + message.text + '</p>';
+    
+        document.querySelector('.cr-chat-box').appendChild(domNode);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 })
 
 socket.on('consoleMessage', message => {
-    const domNode = document.createElement('div');
-    domNode.innerHTML = '<p class="console-text">' + message + '</p>';
-
-    document.querySelector('.cr-chat-box').appendChild(domNode);
-
-    chatBox.scrollTop = chatBox.scrollHeight;
+    if (lobbyToggle) {
+        const domNode = document.createElement('div');
+        domNode.innerHTML = '<p class="console-text">' + message + '</p>';
+    
+        document.querySelector('.cr-chat-box').appendChild(domNode);
+    
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 })
 
 function findCardByID(domNode, id, addClass) {
