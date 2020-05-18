@@ -2,14 +2,14 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const express = require('express');
+const express = require('express'); 
 const app = express();
-const bcrypt = require('bcrypt');
-const passport = require('passport');
+const bcrypt = require('bcrypt'); //used to hash passwords
+const passport = require('passport'); //
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
-const socket = require('socket.io');
+const socket = require('socket.io'); 
 const http = require('http');
 
 const db = require('./db');
