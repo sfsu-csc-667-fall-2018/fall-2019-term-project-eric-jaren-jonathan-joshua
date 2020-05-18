@@ -6,6 +6,7 @@ module.exports = {
       {
         id: {
           type: Sequelize.SERIAL,
+          autoIncrement: true,
           primaryKey: true,
         },
         card_id: {
