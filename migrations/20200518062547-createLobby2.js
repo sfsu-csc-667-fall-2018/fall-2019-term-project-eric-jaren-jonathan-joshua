@@ -5,7 +5,7 @@ module.exports = {
       'lobby_2',
       {
         id: {
-          type: Sequelize.SERIAL,
+          type: Sequelize.INTEGER,
           autoIncrement: true,
           primaryKey: true,
         },
