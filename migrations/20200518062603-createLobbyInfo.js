@@ -10,7 +10,8 @@ module.exports = {
         },
         game_state: {
           type: Sequelize.INTEGER,
-          allowNull: false
+          allowNull: false,
+          defaultValue: 0
         },
         player_list: {
           type: Sequelize.ARRAY(Sequelize.INTEGER),
