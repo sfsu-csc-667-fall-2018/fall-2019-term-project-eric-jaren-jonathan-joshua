@@ -53,23 +53,26 @@
                     </form>
                 </div>
                 <div class="cr-game-progress">
-                    <h2 class="cr-title"><%= name %>'s Turn</h2>
-                    <div class="cr-game-enemy-right">
+                    <form id="cr-game-end">
+                        <button class="cr-end-button cr-button">End Game</button>
+                    </form>
+                    <h2 id="cr-game-title" class="cr-title"></h2>
+                    <div id="cr-enemy-right" class="cr-hidden cr-game-enemy-right">
                         <div class="cr-card-back cr-game-right-card">?</div>
                     </div>
-                    <div class="cr-game-enemy-top">
+                    <div id="cr-enemy-top" class="cr-hidden cr-game-enemy-top">
                         <div class="cr-card-back cr-game-top-card">?</div>
                     </div>
-                    <div class="cr-game-enemy-left">
+                    <div id="cr-enemy-left" class="cr-hidden cr-game-enemy-left">
                         <div class="cr-card-back cr-game-left-card">?</div>
                     </div>
                     <div class="cr-game-draw">
-                        <div class="cr-discard-card">?</div>
+                        <div id="cr-discard" class="cr-discard-card"></div>
                         <form id="cr-draw">
                             <button class="cr-card-back cr-draw-card">?</button>
                         </form>
                     </div>
-                    <div class="cr-game-hand"></div>
+                    <div id="cr-game-hand" class="cr-game-hand"></div>
                 </div>
             </div>
             <div class="cr-chat column">

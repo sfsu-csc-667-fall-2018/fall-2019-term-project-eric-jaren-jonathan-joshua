@@ -86,6 +86,12 @@ input:focus {
     transform: translate(-50%);
 }
 
+.cr-end-button {
+    position: absolute;
+    left: 270px;
+    bottom: 205px;
+}
+
 .cr-button:hover {
     background: var(--cr-accent-secondary);
 }
@@ -177,7 +183,7 @@ input:focus {
     z-index: 5;
 }
 
-.cr-game-progoress {
+.cr-game-progress {
     z-index: 1;
 }
 
@@ -196,7 +202,6 @@ input:focus {
 
 .cr-card-inhand {
     margin: 0px 5px;
-    padding: 20px;
 }
 
 .cr-card-inhand:hover {
@@ -204,15 +209,15 @@ input:focus {
 }
 
 .cr-card-front {
+    padding: 20px;
     border-radius: 5px;
-    height: 120px;
-    width:  80px;
     color: var(--cr-white);
     font-weight: bold;
     font-size: 56px;
-    float: left;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
+    height: 120px;
+    min-width: 80px;
 }
 
 .cr-card-red {
@@ -235,13 +240,24 @@ input:focus {
     background-image: linear-gradient(to bottom right, var(--cr-red1), var(--cr-yellow1), var(--cr-green6), var(--cr-blue1));
 }
 
+.cr-card-block {
+    margin-left: -3px;
+    margin-top: -5px;
+}
+
+.cr-card-draw-2 {
+    font-size: 40px;
+    margin-left: -6px;
+    margin-top: 10px;
+}
+
 .cr-card-back {
     background: var(--cr-black);
     border-radius: 5px;
     margin: 0px 10px;
     padding-top: 6px;
     height: 120px;
-    width:  80px;
+    min-width: 80px;
     border: 10px solid var(--cr-white);
     color: var(--cr-white);
     font-weight: bold;
@@ -265,8 +281,6 @@ input:focus {
     left: 540px;
     background: var(--cr-green4);
     border-radius: 5px;
-    margin: 0px 10px;
-    padding-top: 15px;
     height: 120px;
     width:  80px;
     color: var(--cr-white);
