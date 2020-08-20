@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/sfsu-csc-667-fall-2018/fall-2019-term-project-eric-jaren-jonathan-joshua#readme",
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "body-parse": "^0.1.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.2",
